@@ -10,11 +10,14 @@ import useAuthStore from './store/authStore';
 import LoginPage from './pages/Auth/LoginPage';
 import RegisterPage from './pages/Auth/RegisterPage';
 import DashboardPage from './pages/Dashboard/DashboardPage';
+import PropertiesListPage from './pages/Properties/PropertiesListPage';
+import BookingsListPage from './pages/Bookings/BookingsListPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Components
 import PrivateRoute from './components/common/PrivateRoute';
 import PublicRoute from './components/common/PublicRoute';
+import MainLayout from './components/layout/MainLayout';
 
 function App() {
   const { loadUser, isAuthenticated } = useAuthStore();
@@ -51,7 +54,95 @@ function App() {
             path="/dashboard"
             element={
               <PrivateRoute>
-                <DashboardPage />
+                <MainLayout>
+                  <DashboardPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+
+          {/* Properties */}
+          <Route
+            path="/properties"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <PropertiesListPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+
+          {/* Bookings */}
+          <Route
+            path="/bookings"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <BookingsListPage />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+
+          {/* Placeholder routes for other pages */}
+          <Route
+            path="/messages"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <div className="p-8">
+                    <h1 className="text-2xl font-bold">Messages - Coming Soon</h1>
+                  </div>
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/devices"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <div className="p-8">
+                    <h1 className="text-2xl font-bold">Devices - Coming Soon</h1>
+                  </div>
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/tasks"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <div className="p-8">
+                    <h1 className="text-2xl font-bold">Tasks - Coming Soon</h1>
+                  </div>
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reports"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <div className="p-8">
+                    <h1 className="text-2xl font-bold">Reports - Coming Soon</h1>
+                  </div>
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <div className="p-8">
+                    <h1 className="text-2xl font-bold">Settings - Coming Soon</h1>
+                  </div>
+                </MainLayout>
               </PrivateRoute>
             }
           />
