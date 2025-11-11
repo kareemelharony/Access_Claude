@@ -1,0 +1,46 @@
+{
+  "authentication": {
+    "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "token_expired": "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى",
+    "token_invalid": "رمز المصادقة غير صالح",
+    "unauthorized": "غير مصرح لك بتنفيذ هذا الإجراء",
+    "forbidden": "تم رفض الوصول"
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "invalid_email": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+    "invalid_phone": "يرجى إدخال رقم هاتف صحيح",
+    "password_too_short": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "password_requirements": "يجب أن تحتوي كلمة المرور على أحرف كبيرة وصغيرة وأرقام وأحرف خاصة",
+    "dates_invalid": "يجب أن يكون تاريخ المغادرة بعد تاريخ الوصول",
+    "min_nights": "الحد الأدنى للإقامة هو {{count}} ليالٍ",
+    "max_nights": "الحد الأقصى للإقامة هو {{count}} ليالٍ"
+  },
+  "database": {
+    "not_found": "{{resource}} غير موجود",
+    "already_exists": "{{resource}} موجود بالفعل",
+    "connection_error": "خطأ في الاتصال بقاعدة البيانات"
+  },
+  "integration": {
+    "beds24_error": "خطأ في واجهة Beds24: {{message}}",
+    "tuya_error": "خطأ في واجهة Tuya: {{message}}",
+    "ttlock_error": "خطأ في واجهة TTLock: {{message}}",
+    "rate_limit": "عدد كبير جداً من الطلبات. يرجى المحاولة لاحقاً"
+  },
+  "booking": {
+    "overlap": "هذا العقار محجوز بالفعل للتواريخ المحددة",
+    "past_dates": "لا يمكن إنشاء حجز بتواريخ سابقة",
+    "invalid_property": "اختيار عقار غير صالح",
+    "cancellation_failed": "فشل إلغاء الحجز"
+  },
+  "device": {
+    "offline": "الجهاز غير متصل حالياً",
+    "control_failed": "فشل التحكم في الجهاز",
+    "not_supported": "هذه العملية غير مدعومة لهذا النوع من الأجهزة"
+  },
+  "general": {
+    "server_error": "خطأ داخلي في الخادم. يرجى المحاولة لاحقاً",
+    "not_implemented": "هذه الميزة غير متوفرة بعد",
+    "maintenance": "النظام قيد الصيانة حالياً"
+  }
+}

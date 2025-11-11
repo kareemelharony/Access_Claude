@@ -1,0 +1,55 @@
+{
+  "app_name": "لوميف أكسس",
+  "welcome": "مرحباً بك في لوميف أكسس",
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "bookings": "الحجوزات",
+    "properties": "العقارات",
+    "calendar": "التقويم",
+    "messages": "الرسائل",
+    "devices": "الأجهزة",
+    "tasks": "المهام",
+    "reports": "التقارير",
+    "settings": "الإعدادات"
+  },
+  "actions": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "search": "بحث",
+    "filter": "تصفية",
+    "export": "تصدير",
+    "refresh": "تحديث",
+    "submit": "إرسال",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق"
+  },
+  "status": {
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "pending": "قيد الانتظار",
+    "confirmed": "مؤكد",
+    "cancelled": "ملغي",
+    "completed": "مكتمل",
+    "online": "متصل",
+    "offline": "غير متصل"
+  },
+  "dates": {
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "tomorrow": "غداً",
+    "this_week": "هذا الأسبوع",
+    "this_month": "هذا الشهر",
+    "last_month": "الشهر الماضي"
+  },
+  "messages": {
+    "success": "تمت العملية بنجاح",
+    "error": "حدث خطأ",
+    "loading": "جاري التحميل...",
+    "no_data": "لا توجد بيانات متاحة",
+    "confirm_delete": "هل أنت متأكد من حذف هذا العنصر؟"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "authentication": {
+    "invalid_credentials": "Invalid email or password",
+    "token_expired": "Your session has expired. Please login again",
+    "token_invalid": "Invalid authentication token",
+    "unauthorized": "You are not authorized to perform this action",
+    "forbidden": "Access denied"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalid_email": "Please enter a valid email address",
+    "invalid_phone": "Please enter a valid phone number",
+    "password_too_short": "Password must be at least 8 characters",
+    "password_requirements": "Password must contain uppercase, lowercase, number, and special character",
+    "dates_invalid": "Check-out date must be after check-in date",
+    "min_nights": "Minimum stay is {{count}} nights",
+    "max_nights": "Maximum stay is {{count}} nights"
+  },
+  "database": {
+    "not_found": "{{resource}} not found",
+    "already_exists": "{{resource}} already exists",
+    "connection_error": "Database connection error"
+  },
+  "integration": {
+    "beds24_error": "Beds24 API error: {{message}}",
+    "tuya_error": "Tuya API error: {{message}}",
+    "ttlock_error": "TTLock API error: {{message}}",
+    "rate_limit": "Too many requests. Please try again later"
+  },
+  "booking": {
+    "overlap": "This property is already booked for the selected dates",
+    "past_dates": "Cannot create booking with past dates",
+    "invalid_property": "Invalid property selection",
+    "cancellation_failed": "Failed to cancel booking"
+  },
+  "device": {
+    "offline": "Device is currently offline",
+    "control_failed": "Failed to control device",
+    "not_supported": "This operation is not supported for this device type"
+  },
+  "general": {
+    "server_error": "Internal server error. Please try again later",
+    "not_implemented": "This feature is not yet implemented",
+    "maintenance": "System is currently under maintenance"
+  }
+}
