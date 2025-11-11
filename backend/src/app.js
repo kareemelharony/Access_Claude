@@ -90,13 +90,13 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/auth', authLimiter, require('./routes/auth.routes'));
-// app.use('/api/bookings', require('./routes/bookings.routes'));
-// app.use('/api/properties', require('./routes/properties.routes'));
+app.use('/api/properties', require('./routes/property.routes'));
+app.use('/api/bookings', require('./routes/booking.routes'));
+app.use('/api/webhooks', require('./routes/webhook.routes'));
 // app.use('/api/devices', require('./routes/devices.routes'));
 // app.use('/api/messages', require('./routes/messages.routes'));
 // app.use('/api/automations', require('./routes/automations.routes'));
 // app.use('/api/tasks', require('./routes/tasks.routes'));
-// app.use('/api/webhooks', require('./routes/webhooks.routes'));
 
 // 404 handler
 app.use((req, res) => {
