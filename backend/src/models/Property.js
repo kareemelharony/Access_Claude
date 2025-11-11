@@ -89,6 +89,11 @@ const Property = sequelize.define('properties', {
     field: 'beds24_room_ids',
     defaultValue: []
   },
+  beds24RefreshToken: {
+    type: DataTypes.TEXT,
+    field: 'beds24_refresh_token',
+    comment: 'Encrypted Beds24 OAuth refresh token'
+  },
   beds24SyncEnabled: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
@@ -114,6 +119,16 @@ const Property = sequelize.define('properties', {
   ttlockUserId: {
     type: DataTypes.STRING(100),
     field: 'ttlock_user_id'
+  },
+  ttlockAccessToken: {
+    type: DataTypes.TEXT,
+    field: 'ttlock_access_token',
+    comment: 'TTLock OAuth access token'
+  },
+  ttlockRefreshToken: {
+    type: DataTypes.TEXT,
+    field: 'ttlock_refresh_token',
+    comment: 'Encrypted TTLock refresh token'
   },
   ttlockEnabled: {
     type: DataTypes.BOOLEAN,
