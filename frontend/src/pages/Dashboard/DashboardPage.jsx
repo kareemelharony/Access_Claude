@@ -7,19 +7,24 @@ import {
   DoorOpen,
   DoorClosed,
   Plus,
+  Settings,
+  AlertCircle,
 } from 'lucide-react';
 import usePropertyStore from '../../store/propertyStore';
 import useBookingStore from '../../store/bookingStore';
+import useDeviceStore from '../../store/deviceStore';
 
 const DashboardPage = () => {
   const { t } = useTranslation(['common', 'dashboard']);
   const { properties, loadProperties } = usePropertyStore();
   const { bookingStats, loadBookingStats } = useBookingStore();
+  const { deviceStats, loadDeviceStats } = useDeviceStore();
 
   useEffect(() => {
     loadProperties();
     loadBookingStats();
-  }, [loadProperties, loadBookingStats]);
+    loadDeviceStats();
+  }, [loadProperties, loadBookingStats, loadDeviceStats]);
 
   const stats = [
     {
@@ -38,6 +43,25 @@ const DashboardPage = () => {
       bgColor: 'bg-green-100',
       link: '/bookings',
     },
+    {
+      name: 'Smart Devices',
+      value: deviceStats?.total || 0,
+      icon: Settings,
+      color: 'text-indigo-600',
+      bgColor: 'bg-indigo-100',
+      link: '/devices',
+    },
+    {
+      name: 'Device Alerts',
+      value: (deviceStats?.byStatus?.offline || 0) + (deviceStats?.lowBattery || 0),
+      icon: AlertCircle,
+      color: 'text-red-600',
+      bgColor: 'bg-red-100',
+      link: '/devices?status=offline',
+    },
+  ];
+
+  const upcomingStats = [
     {
       name: 'Check-ins Today',
       value: bookingStats?.checkInsToday || 0,
@@ -75,6 +99,32 @@ const DashboardPage = () => {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat) => {
+            const Icon = stat.icon;
+            return (
+              <Link
+                key={stat.name}
+                to={stat.link}
+                className="card hover:shadow-lg transition-shadow"
+              >
+                <div className="flex items-center">
+                  <div className={`${stat.bgColor} p-3 rounded-lg`}>
+                    <Icon className={`h-6 w-6 ${stat.color}`} />
+                  </div>
+                  <div className="ms-4">
+                    <p className="text-sm font-medium text-gray-600">{stat.name}</p>
+                    <p className="text-2xl font-semibold text-gray-900">
+                      {stat.value}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Upcoming Events */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {upcomingStats.map((stat) => {
             const Icon = stat.icon;
             return (
               <Link

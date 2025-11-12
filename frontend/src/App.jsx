@@ -12,6 +12,7 @@ import RegisterPage from './pages/Auth/RegisterPage';
 import DashboardPage from './pages/Dashboard/DashboardPage';
 import PropertiesListPage from './pages/Properties/PropertiesListPage';
 import BookingsListPage from './pages/Bookings/BookingsListPage';
+import DevicesListPage from './pages/Devices/DevicesListPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Components
@@ -103,9 +104,7 @@ function App() {
             element={
               <PrivateRoute>
                 <MainLayout>
-                  <div className="p-8">
-                    <h1 className="text-2xl font-bold">Devices - Coming Soon</h1>
-                  </div>
+                  <DevicesListPage />
                 </MainLayout>
               </PrivateRoute>
             }
