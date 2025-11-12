@@ -6,13 +6,14 @@ Lumive Access is an all-in-one property management platform targeting short-term
 
 ## 🌟 Key Features
 
-- **📅 Booking Management** - Full integration with Beds24 for multi-channel booking sync
-- **🔐 Smart Access Control** - TTLock integration for automated door code generation
-- **🏠 Smart Home Devices** - Tuya Cloud integration for thermostats, lights, and sensors
-- **⚡ Automation Engine** - Automated check-in/check-out workflows and guest communications
-- **💬 Unified Inbox** - Centralized guest messaging across all platforms
-- **🌍 Bilingual Support** - Full Arabic and English support (RTL-ready)
-- **📊 Analytics & Reporting** - Revenue tracking, occupancy rates, and energy monitoring
+- **📅 Booking Management** - Full integration with Beds24 for multi-channel booking sync (Airbnb, Booking.com, etc.)
+- **🔐 Smart Lock Control** - TTLock and Tuya smart locks with automated passcode generation
+- **🏠 Smart Home Devices** - Tuya Cloud integration for lights, thermostats, plugs, sensors, and more
+- **⚡ Automation Engine** - Rule-based automations for check-in/check-out workflows and guest communications
+- **💬 Multi-Channel Messaging** - Email, SMS, and WhatsApp guest communications with template system
+- **🌍 Bilingual Support** - Full Arabic and English support with RTL layout
+- **📊 Real-Time Monitoring** - Device status tracking, booking dashboard, and analytics
+- **🔒 Enterprise Security** - AES-256-GCM encryption, JWT authentication, rate limiting
 
 ## 🚀 Technology Stack
 
@@ -36,11 +37,11 @@ Lumive Access is an all-in-one property management platform targeting short-term
 - **i18n:** react-i18next
 
 ### Integrations
-- **Beds24 API** - Booking management
-- **Tuya Cloud API** - Smart home devices
-- **TTLock Cloud API** - Smart lock management
-- **Stripe** - Payment processing
-- **SendGrid** - Email notifications
+- **Beds24 API v2** - Multi-channel booking management with OAuth 2.0 and webhooks
+- **Tuya Cloud API** - Smart home devices including smart locks, lights, thermostats, plugs, sensors
+- **TTLock Cloud API** - Specialized smart lock management with passcode generation
+- **SendGrid** - Email delivery (placeholder ready for integration)
+- **Twilio** - SMS and WhatsApp messaging (placeholder ready for integration)
 
 ## 📋 Prerequisites
 
@@ -206,29 +207,59 @@ lumive-access/
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - Login user
 - `POST /api/auth/refresh` - Refresh access token
-- `GET /api/auth/me` - Get current user
-- `PATCH /api/auth/profile` - Update user profile
-- `POST /api/auth/change-password` - Change password
 - `POST /api/auth/logout` - Logout user
 
-### Bookings (Coming Soon)
-- `GET /api/bookings` - List bookings
-- `GET /api/bookings/:id` - Get booking details
-- `POST /api/bookings` - Create booking
-- `PATCH /api/bookings/:id` - Update booking
-- `DELETE /api/bookings/:id` - Cancel booking
-
-### Properties (Coming Soon)
-- `GET /api/properties` - List properties
-- `GET /api/properties/:id` - Get property details
+### Properties
+- `GET /api/properties` - List user properties
 - `POST /api/properties` - Create property
+- `GET /api/properties/:id` - Get property details
 - `PATCH /api/properties/:id` - Update property
 - `DELETE /api/properties/:id` - Delete property
+- `POST /api/properties/:id/beds24/connect` - Connect property to Beds24
+- `POST /api/properties/:id/beds24/sync` - Sync property from Beds24
 
-### Devices (Coming Soon)
-- `GET /api/devices` - List devices
+### Bookings
+- `GET /api/bookings` - List bookings (with pagination & filters)
+- `POST /api/bookings` - Create booking
+- `GET /api/bookings/:id` - Get booking details
+- `PATCH /api/bookings/:id` - Update booking
+- `POST /api/bookings/:id/cancel` - Cancel booking
+- `POST /api/bookings/beds24/sync` - Sync all bookings from Beds24
+- `GET /api/bookings/stats` - Get booking statistics
+
+### Devices
+- `GET /api/devices` - List all devices
+- `POST /api/devices` - Create device
 - `GET /api/devices/:id` - Get device details
-- `POST /api/devices/:id/control` - Control device
+- `PATCH /api/devices/:id` - Update device
+- `DELETE /api/devices/:id` - Delete device
+- `GET /api/devices/:id/status` - Get real-time device status
+- `POST /api/devices/:id/control` - Send control command to device
+- `GET /api/devices/stats` - Get device statistics
+- **TTLock Specific:**
+  - `GET /api/devices/ttlock/auth-url` - Get TTLock OAuth URL
+  - `POST /api/devices/ttlock/callback` - Handle TTLock OAuth callback
+  - `POST /api/devices/ttlock/sync` - Sync TTLock devices
+  - `POST /api/devices/:id/passcode` - Generate access passcode
+  - `GET /api/devices/:id/passcodes` - List all passcodes
+  - `DELETE /api/devices/:id/passcode/:passcodeId` - Delete passcode
+- **Tuya Specific:**
+  - `POST /api/devices/tuya/connect` - Connect Tuya home to property
+  - `POST /api/devices/tuya/sync` - Sync Tuya devices
+
+### Automations
+- `GET /api/automations` - List automation rules
+- `POST /api/automations` - Create automation rule
+- `GET /api/automations/:id` - Get automation details
+- `PATCH /api/automations/:id` - Update automation
+- `DELETE /api/automations/:id` - Delete automation
+- `GET /api/automations/stats` - Get automation statistics
+- `POST /api/automations/:id/test` - Test automation execution
+- `GET /api/automations/messages/:bookingId` - Get booking messages
+- `POST /api/automations/messages/:messageId/retry` - Retry failed message
+
+### Webhooks
+- `POST /api/webhooks/beds24` - Beds24 webhook handler
 
 ## 🧪 Testing
 
@@ -301,43 +332,74 @@ frontend/public/locales/ar/common.json
 - **Input Validation** using Joi
 - **XSS Protection** using xss library
 
+## 🔐 Smart Lock Integration
+
+The platform supports smart locks from both TTLock and Tuya platforms:
+
+### TTLock Smart Locks
+- **OAuth 2.0 Authentication** - Secure token-based integration
+- **Passcode Generation** - Time-limited, permanent, one-time, and cyclic codes
+- **Remote Control** - Lock/unlock via gateway
+- **Access Logs** - Track all lock/unlock events
+- **Battery Monitoring** - Real-time battery level tracking
+- **Guest Passcodes** - Automatically generated for booking dates
+
+### Tuya Smart Locks
+- **Cloud API Integration** - Full smart lock support via Tuya platform
+- **Multi-Brand Support** - Works with various Tuya-compatible smart lock brands
+- **Device Control** - Lock/unlock, status monitoring
+- **Scene Integration** - Combine with other smart home devices
+- **Real-Time Status** - Online/offline monitoring
+
+Both systems integrate seamlessly with the automation engine to automatically generate and send access codes to guests based on booking dates.
+
 ## 📊 Business Model
 
 - **Pricing:** 50 SAR per property/month
 - **Target Margin:** 36-42 SAR after infrastructure costs
 - **Target Market:** Short-term rental hosts in KSA/UAE
 
-## 🗺️ Roadmap
+## 🗺️ Development Roadmap
 
-### Phase 1: Foundation ✅
-- [x] Project setup
-- [x] Authentication system
-- [x] Database models
-- [x] i18n support
+### Phase 1: Foundation ✅ COMPLETE
+- [x] Project setup (Node.js, React, PostgreSQL, Redis)
+- [x] Authentication system (JWT with refresh tokens)
+- [x] Database models (User, Property, Booking, Device, Automation, GuestMessage)
+- [x] Bilingual i18n support (English & Arabic with RTL)
+- [x] Frontend dashboard and navigation
 
-### Phase 2: Beds24 Integration (In Progress)
-- [ ] Beds24 OAuth setup
-- [ ] Booking sync
-- [ ] Webhook handlers
-- [ ] Calendar view
+### Phase 2: Beds24 Integration ✅ COMPLETE
+- [x] Beds24 OAuth 2.0 setup
+- [x] Property and booking sync
+- [x] Webhook handlers for real-time updates
+- [x] Frontend property and booking management UI
+- [x] Pagination and filtering
 
-### Phase 3: Device Integration
-- [ ] TTLock integration
-- [ ] Tuya integration
-- [ ] Device management dashboard
-- [ ] Automated access codes
+### Phase 3: Device Integration ✅ COMPLETE
+- [x] TTLock OAuth integration and passcode generation
+- [x] Tuya Cloud API integration for smart home devices
+- [x] Device management dashboard with control interface
+- [x] Automated access code generation for bookings
+- [x] Real-time device status monitoring
+- [x] Device sync from both TTLock and Tuya platforms
 
-### Phase 4: Automation Engine
-- [ ] Rule engine
-- [ ] Time-based automations
-- [ ] Event-based automations
-- [ ] Automation builder UI
+### Phase 4: Automation Engine ✅ COMPLETE
+- [x] Flexible automation rule engine
+- [x] Trigger types (booking_created, check_in, check_out, time-based)
+- [x] Action types (messages, passcode generation, device control)
+- [x] Multi-channel messaging (Email, SMS, WhatsApp)
+- [x] Template rendering system with variables
+- [x] Execution tracking and statistics
 
-### Phase 5: Launch
-- [ ] Testing & QA
-- [ ] Documentation
-- [ ] Production deployment
-- [ ] User onboarding
+### Phase 5: Future Enhancements 🔄 PLANNED
+- [ ] Advanced analytics and reporting dashboards
+- [ ] Task management system
+- [ ] Team member management with roles
+- [ ] Mobile app (React Native)
+- [ ] Payment integration (Stripe)
+- [ ] Guest portal
+- [ ] Advanced automation builder UI
+- [ ] Multi-language expansion (beyond English/Arabic)
 
 ## 🤝 Contributing
 
