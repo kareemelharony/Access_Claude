@@ -393,7 +393,7 @@ class DeviceService {
   }
 
   /**
-   * Control Tuya device
+   * Control Tuya device (including smart locks)
    * @param {string} deviceId - Device ID
    * @param {string} userId - User ID
    * @param {Object} command - Command data
@@ -413,6 +413,7 @@ class DeviceService {
       let result;
 
       switch (command.action) {
+        // General device commands
         case 'toggle':
           result = await tuyaService.toggleDevice(accessToken, tuyaDeviceId, command.turnOn);
           break;
@@ -431,6 +432,31 @@ class DeviceService {
 
         case 'custom_command':
           result = await tuyaService.sendDeviceCommand(accessToken, tuyaDeviceId, command.commands);
+          break;
+
+        // Smart lock specific commands
+        case 'lock':
+          result = await tuyaService.lockControl(accessToken, tuyaDeviceId, true);
+          break;
+
+        case 'unlock':
+          result = await tuyaService.lockControl(accessToken, tuyaDeviceId, false);
+          break;
+
+        case 'generate_passcode':
+          result = await tuyaService.generateLockPasscode(accessToken, tuyaDeviceId, command.passcodeData);
+          break;
+
+        case 'delete_passcode':
+          result = await tuyaService.deleteLockPasscode(accessToken, tuyaDeviceId, command.passcodeId);
+          break;
+
+        case 'list_passcodes':
+          result = await tuyaService.getLockPasscodes(accessToken, tuyaDeviceId);
+          break;
+
+        case 'get_lock_records':
+          result = await tuyaService.getLockRecords(accessToken, tuyaDeviceId, command.options || {});
           break;
 
         default:
