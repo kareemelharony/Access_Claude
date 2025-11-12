@@ -3,6 +3,8 @@ const User = require('./User');
 const Property = require('./Property');
 const Booking = require('./Booking');
 const Device = require('./Device');
+const Automation = require('./Automation');
+const GuestMessage = require('./GuestMessage');
 
 /**
  * Define model associations
@@ -44,6 +46,53 @@ Device.belongsTo(Property, {
   as: 'property'
 });
 
+// User <-> Automation (One-to-Many)
+User.hasMany(Automation, {
+  foreignKey: 'ownerId',
+  as: 'automations',
+  onDelete: 'CASCADE'
+});
+
+Automation.belongsTo(User, {
+  foreignKey: 'ownerId',
+  as: 'owner'
+});
+
+// Property <-> Automation (One-to-Many, optional)
+Property.hasMany(Automation, {
+  foreignKey: 'propertyId',
+  as: 'automations',
+  onDelete: 'CASCADE'
+});
+
+Automation.belongsTo(Property, {
+  foreignKey: 'propertyId',
+  as: 'property'
+});
+
+// Booking <-> GuestMessage (One-to-Many)
+Booking.hasMany(GuestMessage, {
+  foreignKey: 'bookingId',
+  as: 'messages',
+  onDelete: 'CASCADE'
+});
+
+GuestMessage.belongsTo(Booking, {
+  foreignKey: 'bookingId',
+  as: 'booking'
+});
+
+// Automation <-> GuestMessage (One-to-Many, optional)
+Automation.hasMany(GuestMessage, {
+  foreignKey: 'automationId',
+  as: 'messages'
+});
+
+GuestMessage.belongsTo(Automation, {
+  foreignKey: 'automationId',
+  as: 'automation'
+});
+
 /**
  * Sync database (only use in development)
  */
@@ -63,5 +112,7 @@ module.exports = {
   Property,
   Booking,
   Device,
+  Automation,
+  GuestMessage,
   syncDatabase
 };

@@ -94,8 +94,8 @@ app.use('/api/properties', require('./routes/property.routes'));
 app.use('/api/bookings', require('./routes/booking.routes'));
 app.use('/api/webhooks', require('./routes/webhook.routes'));
 app.use('/api/devices', require('./routes/device.routes'));
+app.use('/api/automations', require('./routes/automation.routes'));
 // app.use('/api/messages', require('./routes/messages.routes'));
-// app.use('/api/automations', require('./routes/automations.routes'));
 // app.use('/api/tasks', require('./routes/tasks.routes'));
 
 // 404 handler
