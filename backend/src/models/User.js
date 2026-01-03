@@ -34,9 +34,29 @@ const User = sequelize.define('users', {
   role: {
     type: DataTypes.STRING(50),
     allowNull: false,
-    defaultValue: 'owner',
+    defaultValue: 'operations_specialist',
     validate: {
-      isIn: [['owner', 'admin', 'staff']]
+      isIn: [[
+        'ceo',
+        'operations_manager',
+        'operations_specialist',
+        'marketing_manager',
+        'marketing_specialist',
+        'sales_manager',
+        'sales_specialist',
+        'financial_manager',
+        'financial_specialist',
+        'admin',
+        'owner',
+        'staff'
+      ]]
+    }
+  },
+  department: {
+    type: DataTypes.STRING(50),
+    allowNull: true,
+    validate: {
+      isIn: [['operations', 'marketing', 'sales', 'financial', 'executive', 'general']]
     }
   },
   language: {
