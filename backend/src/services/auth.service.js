@@ -93,7 +93,8 @@ class AuthService {
       {
         userId: user.id,
         email: user.email,
-        role: user.role
+        role: user.role,
+        department: user.department || 'general'
       },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '15m' }

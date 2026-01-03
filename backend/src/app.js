@@ -90,6 +90,8 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/auth', authLimiter, require('./routes/auth.routes'));
+app.use('/api/users', require('./routes/user.routes'));
+app.use('/api/departments', require('./routes/department.routes'));
 app.use('/api/properties', require('./routes/property.routes'));
 app.use('/api/bookings', require('./routes/booking.routes'));
 app.use('/api/webhooks', require('./routes/webhook.routes'));

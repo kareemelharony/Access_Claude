@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import authService from '../services/auth.service';
+import userService from '../services/user.service';
 
 /**
  * Authentication Store
@@ -9,6 +10,8 @@ const useAuthStore = create((set, get) => ({
   // State
   user: authService.getUser(),
   isAuthenticated: authService.isAuthenticated(),
+  permissions: [],
+  accessiblePages: [],
   isLoading: false,
   error: null,
 
@@ -24,6 +27,10 @@ const useAuthStore = create((set, get) => ({
         isAuthenticated: true,
         isLoading: false,
       });
+
+      // Load permissions after registration
+      get().loadPermissions();
+
       return data;
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -43,6 +50,10 @@ const useAuthStore = create((set, get) => ({
         isAuthenticated: true,
         isLoading: false,
       });
+
+      // Load permissions after login
+      get().loadPermissions();
+
       return data;
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -60,6 +71,8 @@ const useAuthStore = create((set, get) => ({
       set({
         user: null,
         isAuthenticated: false,
+        permissions: [],
+        accessiblePages: [],
         isLoading: false,
         error: null,
       });
@@ -68,8 +81,29 @@ const useAuthStore = create((set, get) => ({
       set({
         user: null,
         isAuthenticated: false,
+        permissions: [],
+        accessiblePages: [],
         isLoading: false,
         error: error.message,
+      });
+    }
+  },
+
+  /**
+   * Load user permissions
+   */
+  loadPermissions: async () => {
+    try {
+      const permissionsData = await userService.getMyPermissions();
+      set({
+        permissions: permissionsData.permissions || [],
+        accessiblePages: permissionsData.pages || [],
+      });
+    } catch (error) {
+      console.error('Failed to load permissions:', error);
+      set({
+        permissions: [],
+        accessiblePages: [],
       });
     }
   },
@@ -79,7 +113,7 @@ const useAuthStore = create((set, get) => ({
    */
   loadUser: async () => {
     if (!authService.isAuthenticated()) {
-      set({ isAuthenticated: false, user: null });
+      set({ isAuthenticated: false, user: null, permissions: [], accessiblePages: [] });
       return;
     }
 
@@ -91,10 +125,16 @@ const useAuthStore = create((set, get) => ({
         isAuthenticated: true,
         isLoading: false,
       });
+
+      // Load permissions
+      get().loadPermissions();
+
     } catch (error) {
       set({
         user: null,
         isAuthenticated: false,
+        permissions: [],
+        accessiblePages: [],
         isLoading: false,
         error: error.message,
       });
@@ -137,6 +177,32 @@ const useAuthStore = create((set, get) => ({
    * Clear error
    */
   clearError: () => set({ error: null }),
+
+  /**
+   * Check if user has permission
+   */
+  hasPermission: (permission) => {
+    const { permissions } = get();
+    return permissions.includes(permission);
+  },
+
+  /**
+   * Check if user can access page
+   */
+  canAccessPage: (pagePath) => {
+    const { accessiblePages } = get();
+    return accessiblePages.some(page =>
+      pagePath === page || pagePath.startsWith(page + '/')
+    );
+  },
+
+  /**
+   * Check if user has any of the required roles
+   */
+  hasRole: (...roles) => {
+    const { user } = get();
+    return user && roles.includes(user.role);
+  },
 }));
 
 export default useAuthStore;
